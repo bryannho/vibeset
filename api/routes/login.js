@@ -7,8 +7,8 @@ const cookieParser = require('cookie-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
 const bodyParser = require('body-parser');
 
-const client_id = 'c506328cd1044bbc890fe260bcfe4eeb'; // Your client id
-const client_secret = 'd18b425514bc4ad5b287718c4faff4b3'; // Your secret
+const client_id = ''; // Your client id
+const client_secret = ''; // Your secret
 const redirect_uri = 'http://localhost:9000/login/callback'; // Your redirect uri
 
 /**
@@ -55,7 +55,6 @@ app.get('/', function(req, res) {
 });
 
 app.post('/complete', function(req, res) {
-    console.log('here')
     // haven't tried this
     const code = req.body.code
     const spotifyApi = new SpotifyWebApi({

@@ -7,7 +7,10 @@ const code = new URLSearchParams(window.location.search).get('code')
 
 function App() {
   return (
-    code ? <Dashboard code={code}/> : <Login />
+    <>
+    <head><link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"></link></head>
+    {code ? <Dashboard code={code}/> : <Login />}
+    </>
   );
 }
 
