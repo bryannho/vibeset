@@ -30,25 +30,30 @@ rl.question('Enter your Spotify Client ID: ', (clientId) => {
       return;
     }
 
-    const envContent = `SPOTIFY_CLIENT_ID=${trimmedClientId}
+    rl.question('Enter custom API callback port (default 9000, press Enter to use default): ', (apiCallbackPortInput) => {
+      const apiCallbackPort = apiCallbackPortInput.trim() || '9000';
+
+      const envContent = `SPOTIFY_CLIENT_ID=${trimmedClientId}
 SPOTIFY_CLIENT_SECRET=${trimmedClientSecret}
+API_CALLBACK_PORT=${apiCallbackPort}
 # Optional: You can also define your redirect URI here if it differs from the default in login.js
 # Example: REDIRECT_URI=http://localhost:3000/your-callback-path
 `;
 
-    const envPath = path.join(__dirname, '.env');
+      const envPath = path.join(__dirname, '.env');
 
-    fs.writeFile(envPath, envContent, (err) => {
-      if (err) {
-        console.error('Error writing .env file:', err);
-      } else {
-        console.log('---');
-        console.log('.env file created successfully in the "api" directory!');
-        console.log(`File path: ${envPath}`);
-        console.log('---');
-        console.log('IMPORTANT: If you are using version control (like Git), ensure that the .env file is listed in your .gitignore file to prevent committing your secrets.');
-      }
-      rl.close();
+      fs.writeFile(envPath, envContent, (err) => {
+        if (err) {
+          console.error('Error writing .env file:', err);
+        } else {
+          console.log('---');
+          console.log('.env file created successfully in the "api" directory!');
+          console.log(`File path: ${envPath}`);
+          console.log('---');
+          console.log('IMPORTANT: If you are using version control (like Git), ensure that the .env file is listed in your .gitignore file to prevent committing your secrets.');
+        }
+        rl.close();
+      });
     });
   });
 });

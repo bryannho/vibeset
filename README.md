@@ -32,17 +32,27 @@ vibeset is a full-stack web application designed to enhance your music listening
     ```bash
     npm install
     ```
-3.  **Spotify API Credentials:**
-    *   This application requires you to use your own Spotify Developer credentials. You can obtain these from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) by creating a new application.
-    *   Once you have your `clientId` and `clientSecret`, you need to configure them for the API. This project uses a setup script to help you create an environment file (`.env`) for this purpose.
-    *   In your terminal, ensure you are in the `api` directory (you should be if you followed step 1).
-    *   Run the setup script:
-        ```bash
-        node setup_env.js
-        ```
-    *   The script will prompt you to enter your Spotify Client ID and Client Secret.
-    *   Upon successful completion, it will create an `.env` file in the `api` directory containing your credentials.
-    *   This `.env` file is already listed in `api/.gitignore`, so your sensitive credentials will not be committed to version control. The application is configured to automatically load these variables when it starts.
+3.  **Spotify API Credentials & Configuration:**
+    *   **Obtaining Credentials:** This application requires you to use your own Spotify Developer credentials (`clientId` and `clientSecret`). You can obtain these by creating a new application on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/).
+    *   **Environment Setup Script:** To configure these credentials for the API, the project provides an interactive setup script.
+        *   In your terminal, ensure you are in the `api` directory (as per step 1).
+        *   Run the script:
+            ```bash
+            node setup_env.js
+            ```
+        *   This script will prompt you for:
+            1.  Your Spotify Client ID.
+            2.  Your Spotify Client Secret.
+            3.  A custom API callback port (it defaults to `9000` if you press Enter). This port is used by the API itself for the OAuth callback.
+        *   Upon completion, the script creates an `.env` file in the `api` directory. This file will store your `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `API_CALLBACK_PORT`.
+        *   The `.env` file is included in `api/.gitignore`, so your sensitive credentials will not be committed to version control. The application automatically loads these variables at startup.
+    *   **Crucial: Spotify Developer Dashboard Configuration:**
+        *   You **must** add the exact Redirect URI that the API will use to your application's settings on the Spotify Developer Dashboard.
+        *   The Redirect URI is constructed as: \`http://localhost:<API_CALLBACK_PORT>/login/callback\`
+        *   **Examples:**
+            *   If you use the default port `9000` (either by pressing Enter at the prompt or setting `API_CALLBACK_PORT=9000`), you must add `http://localhost:9000/login/callback` to your Spotify app's allowed Redirect URIs.
+            *   If you set `API_CALLBACK_PORT` to `9001` during the setup script (or in the `.env` file), you must add `http://localhost:9001/login/callback` to your Spotify app's allowed Redirect URIs.
+        *   A mismatch between the URI configured in your Spotify app settings and the one your API uses will result in an "INVALID_CLIENT: Invalid redirect URI" error during authentication.
 
 4.  **Start the API server:**
     ```bash
