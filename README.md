@@ -33,17 +33,16 @@ vibeset is a full-stack web application designed to enhance your music listening
     npm install
     ```
 3.  **Spotify API Credentials:**
-    *   This application requires you to use your own Spotify Developer credentials.
-    *   Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) and create a new application.
-    *   Once your app is created, you will get a `clientId` and `clientSecret`.
-    *   Open the file `api/routes/login.js`.
-    *   Locate the following lines and replace the placeholder values with your actual credentials:
-        ```javascript
-        // TODO: Replace with your client ID and secret
-        const clientId = 'YOUR_SPOTIFY_CLIENT_ID';
-        const clientSecret = 'YOUR_SPOTIFY_CLIENT_SECRET';
+    *   This application requires you to use your own Spotify Developer credentials. You can obtain these from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) by creating a new application.
+    *   Once you have your `clientId` and `clientSecret`, you need to configure them for the API. This project uses a setup script to help you create an environment file (`.env`) for this purpose.
+    *   In your terminal, ensure you are in the `api` directory (you should be if you followed step 1).
+    *   Run the setup script:
+        ```bash
+        node setup_env.js
         ```
-        **Important:** Keep your `clientSecret` confidential. Do not commit it directly to public repositories if you are cloning/forking this project for your own public use. Consider using environment variables for more secure credential management in production environments.
+    *   The script will prompt you to enter your Spotify Client ID and Client Secret.
+    *   Upon successful completion, it will create an `.env` file in the `api` directory containing your credentials.
+    *   This `.env` file is already listed in `api/.gitignore`, so your sensitive credentials will not be committed to version control. The application is configured to automatically load these variables when it starts.
 
 4.  **Start the API server:**
     ```bash
