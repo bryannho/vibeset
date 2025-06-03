@@ -7,9 +7,10 @@ const cookieParser = require('cookie-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
 const bodyParser = require('body-parser');
 
-const client_id = ''; // Your client id
-const client_secret = ''; // Your secret
-const redirect_uri = 'http://localhost:9000/login/callback'; // Your redirect uri
+const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+const apiCallbackPort = process.env.API_CALLBACK_PORT || '9000';
+const redirect_uri = `http://localhost:${apiCallbackPort}/login/callback`; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -57,8 +58,9 @@ app.get('/', function(req, res) {
 app.post('/complete', function(req, res) {
     // haven't tried this
     const code = req.body.code
+    const apiCallbackPort = process.env.API_CALLBACK_PORT || '9000';
     const spotifyApi = new SpotifyWebApi({
-        redirectUri: 'http://localhost:3000',
+        redirectUri: `http://localhost:${apiCallbackPort}/login/callback`,
         clientId: client_id,
         clientSecret: client_secret
     })
@@ -80,8 +82,9 @@ app.post('/complete', function(req, res) {
 app.post('/refresh', function(req, res) {
     console.log('REFRESH TOKEN: ', req.body.refreshToken)
     const refreshToken = req.body.refreshToken
+    const apiCallbackPort = process.env.API_CALLBACK_PORT || '9000';
     const spotifyApi = new SpotifyWebApi({
-        redirectUri: 'http://localhost:3000',
+        redirectUri: `http://localhost:${apiCallbackPort}/login/callback`,
         clientId: client_id,
         clientSecret: client_secret,
         refreshToken: refreshToken
